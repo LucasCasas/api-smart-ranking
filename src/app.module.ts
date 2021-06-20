@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PlayerModule } from './player/player.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     ),
     ConfigModule.forRoot(),
     PlayerModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
