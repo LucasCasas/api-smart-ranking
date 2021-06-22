@@ -20,17 +20,17 @@ export class PlayerController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async addPlayer(@Body() playerDto: PlayerDto): Promise<Player> {
-    return await this.playerService.addPlayer(playerDto);
+  async add(@Body() playerDto: PlayerDto): Promise<Player> {
+    return await this.playerService.add(playerDto);
   }
 
   @Put('/:id')
   @UsePipes(ValidationPipe)
-  async editPlayer(
+  async edit(
     @Body() playerDto: PlayerDto,
     @Param('id', PlayerParameterValidatorPipe) id: string,
-  ): Promise<void> {
-    return await this.playerService.editPlayer(id, playerDto);
+  ): Promise<Player> {
+    return await this.playerService.edit(id, playerDto);
   }
 
   @Get('/:id')
@@ -46,7 +46,7 @@ export class PlayerController {
   }
 
   @Delete('/:id')
-  async deletePlayer(@Param('id') id: string): Promise<void> {
-    this.playerService.deletePlayer(id);
+  async delete(@Param('id') id: string): Promise<void> {
+    this.playerService.delete(id);
   }
 }
