@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { PlayerDto } from './dto/playerDto';
 import { Player } from './infrastructure/player.interface';
-import { PlayerParameterValidatorPipe } from './pipe/player-parameter-validator.pipe';
+import { ParameterValidatorPipe } from '../common/pipe/parameter-validator.pipe';
 import { PlayerService } from './player.service';
 
 @Controller('api/v1/player')
@@ -28,15 +28,13 @@ export class PlayerController {
   @UsePipes(ValidationPipe)
   async edit(
     @Body() playerDto: PlayerDto,
-    @Param('id', PlayerParameterValidatorPipe) id: string,
+    @Param('id', ParameterValidatorPipe) id: string,
   ): Promise<Player> {
     return await this.playerService.edit(id, playerDto);
   }
 
   @Get('/:id')
-  async get(
-    @Param('id', PlayerParameterValidatorPipe) id: string,
-  ): Promise<Player> {
+  async get(@Param('id', ParameterValidatorPipe) id: string): Promise<Player> {
     return await this.playerService.getById(id);
   }
 

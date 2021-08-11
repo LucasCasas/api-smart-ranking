@@ -4,7 +4,7 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 
-export class PlayerParameterValidatorPipe implements PipeTransform {
+export class ParameterValidatorPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     console.log(value);
     if (!value) {

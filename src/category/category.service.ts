@@ -55,12 +55,10 @@ export class CategoryService {
     if (!categoryDB) {
       throw new BadRequestException(`Category not found!`);
     }
-    console.log(categoryDB.players);
+
     const existsPlayer = categoryDB.players.some(
       (player) => player == playerId,
     );
-
-    console.log(existsPlayer);
 
     if (existsPlayer) {
       throw new BadRequestException(
@@ -69,14 +67,11 @@ export class CategoryService {
     }
     const playerDB = await this.playerService.getById(playerId);
 
-    console.log(2);
     if (!playerDB) {
       throw new BadRequestException(`Player ${playerId} not found!`);
     }
-    console.log(3);
 
     categoryDB.players.push(playerDB);
-    console.log(4);
 
     await this.categoryModel.findOneAndUpdate(
       { _id: categoryId },
@@ -98,5 +93,19 @@ export class CategoryService {
 
   async delete(_id: string): Promise<any> {
     return await this.categoryModel.deleteOne({ _id });
+  }
+
+  async getByPlayer(playerId: any): Promise<Category> {
+    const player = await this.playerService.getById(playerId);
+
+    if (player) {
+      throw new BadRequestException(`Player not found! (${playerId})`);
+    }
+
+    return await this.categoryModel
+      .findOne()
+      .where('players')
+      .in(playerId)
+      .exec();
   }
 }
